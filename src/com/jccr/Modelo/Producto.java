@@ -31,7 +31,7 @@ public class Producto {
 
     /**
      * Crea un Usuario con sus caracteristicas fundamentales
-     * @param usuId un int que representa el id del usuario
+     * @param usuario un int que representa el id del usuario
      * @param usuNom un String que representa el nombre del usuario
      * @param usuIdent un String que representa la identificación del usuario
      * @param usuClavePass un String que representa la clave de ingreso al sistema
