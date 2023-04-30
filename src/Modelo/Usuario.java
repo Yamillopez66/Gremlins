@@ -1,5 +1,5 @@
 
-package com.jccr.Modelo;
+package Modelo;
 
 /**
  *
