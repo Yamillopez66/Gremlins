@@ -1,5 +1,5 @@
 /*
- * IFormProductos.java
+ * IFormGuias.java
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,23 +14,26 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * Formulario manejo de Productos
+ * Formulario de Guias de envios de productos
  * @author Grupo 4 Plataformas de Desarrollo de Software
  * Version 1.0
  */
-public final class IFormProductos extends javax.swing.JInternalFrame {
+public final class IFormGuias extends javax.swing.JInternalFrame {
 
-    private FormPrincipal myPrincipalForm;
-    private JDialogFichaProducto myJDialogFichaProducto;
-    private DefaultTableModel dtm_Productos;
-    private DefaultTableCellRenderer modeloCentrar = new DefaultTableCellRenderer();
-    private DefaultTableCellRenderer modeloAlinearDerecha = new DefaultTableCellRenderer();
+    private final FormPrincipal myPrincipalForm;
+    private JDialogFichaGuia myJDialogFichaGuia;
+    private DefaultTableModel dtm_Guias;
+    private final DefaultTableCellRenderer modeloCentrar = new DefaultTableCellRenderer();
+    private final DefaultTableCellRenderer modeloAlinearDerecha = new DefaultTableCellRenderer();
     
-    /** Creates new form IFormCliente */
-    public IFormProductos(FormPrincipal p) {
+    /** 
+     * Creates new form IFormGuias
+     * @param p 
+     */
+    public IFormGuias(FormPrincipal p) {
         initComponents();
         this.myPrincipalForm = p;
-        this.cargarTablaProductos("where activo = '1' ");
+        this.cargarTablaGuias("");
         this.modeloCentrar.setHorizontalAlignment(SwingConstants.CENTER);
         this.modeloAlinearDerecha.setHorizontalAlignment(SwingConstants.RIGHT);
         this.setLocation();
@@ -48,10 +51,8 @@ public final class IFormProductos extends javax.swing.JInternalFrame {
         grupoBotonBuscar = new javax.swing.ButtonGroup();
         jPanelProductos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaProductos = new javax.swing.JTable();
+        tablaGuias = new javax.swing.JTable();
         jToolBar2 = new javax.swing.JToolBar();
-        cmdNuevo = new javax.swing.JButton();
-        jSeparator6 = new javax.swing.JToolBar.Separator();
         cmdEditar = new javax.swing.JButton();
         jSeparator11 = new javax.swing.JToolBar.Separator();
         cmdEliminar = new javax.swing.JButton();
@@ -64,10 +65,10 @@ public final class IFormProductos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Productos");
+        setTitle("Guias");
 
-        tablaProductos.setAutoCreateRowSorter(true);
-        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGuias.setAutoCreateRowSorter(true);
+        tablaGuias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,34 +79,15 @@ public final class IFormProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaGuias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProductosMouseClicked(evt);
+                tablaGuiasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tablaProductos);
+        jScrollPane1.setViewportView(tablaGuias);
 
         jToolBar2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jToolBar2.setRollover(true);
-
-        cmdNuevo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        cmdNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/3. Agregar.png"))); // NOI18N
-        cmdNuevo.setMnemonic('N');
-        cmdNuevo.setToolTipText("Nuevo Producto");
-        cmdNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        cmdNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        cmdNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNuevoActionPerformed(evt);
-            }
-        });
-        cmdNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdNuevoKeyPressed(evt);
-            }
-        });
-        jToolBar2.add(cmdNuevo);
-        jToolBar2.add(jSeparator6);
 
         cmdEditar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         cmdEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/4. Modificar.png"))); // NOI18N
@@ -201,7 +183,7 @@ public final class IFormProductos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -231,82 +213,62 @@ public void setLocation(){
     this.setLocation ((width - this.getWidth ()) / 2,(height - this.getHeight ()) / 2);
 }
 
-public void cargarTablaProductos(String where){
-    // 1. Efectos de Tabla de los Productos registrados
-    Object[] NombreColumnas = {"ID PROD.", "NOMBRE DEL PRODUCTO", "MARCA", "PROVEEDOR", "VALOR VENTA", "CANTIDAD"};
-    this.dtm_Productos = new DefaultTableModel(NombreColumnas, 0){
+public void cargarTablaGuias(String where){
+    // 1. Efectos de Tabla de los Guias registrados
+    Object[] NombreColumnas = {"ID GUIA", "PRODUCTO", "COMPRADOR", "ORIGEN", "DESTINO", "ESTADO", "FECHA ENTREGA"};
+    this.dtm_Guias = new DefaultTableModel(NombreColumnas, 0){
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
 
-    this.tablaProductos.setModel(dtm_Productos);
-    this.tablaProductos.setForeground(Color.BLACK);
-    this.tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(50);
-    this.tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(300);
-    this.tablaProductos.getColumnModel().getColumn(3).setPreferredWidth(300);
-    this.tablaProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
-    this.tablaProductos.getColumnModel().getColumn(0).setCellRenderer(this.modeloCentrar);
-    this.tablaProductos.getColumnModel().getColumn(4).setCellRenderer(this.modeloAlinearDerecha);
-    this.tablaProductos.getColumnModel().getColumn(5).setCellRenderer(this.modeloAlinearDerecha);
-    this.cargarProductos(where);
+    this.tablaGuias.setModel(dtm_Guias);
+    this.tablaGuias.setForeground(Color.BLACK);
+    this.tablaGuias.getColumnModel().getColumn(0).setPreferredWidth(50);
+    this.tablaGuias.getColumnModel().getColumn(1).setPreferredWidth(300);
+    this.tablaGuias.getColumnModel().getColumn(2).setPreferredWidth(300);
+    this.tablaGuias.getColumnModel().getColumn(2).setPreferredWidth(50);
+    this.tablaGuias.getColumnModel().getColumn(0).setCellRenderer(this.modeloCentrar);
+    this.cargarGuias(where);
 }
 
-private void cargarProductos(String where){
-    /*this.myPrincipalForm.getmyEmpresaVentas().cargarTodosProductos(where);
-    int x = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().size();
+private void cargarGuias(String where){
+    /*this.myPrincipalForm.getmyEmpresaVentas().cargarTodosGuias(where);
+    int x = this.myPrincipalForm.getmyEmpresaVentas().getMyGuias().size();
     for(int i = 0; i < x; i++){
-        int id = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getId();
-        String nom = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getNombre();
-        int pre = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getPrecioVenta();
+        int id = this.myPrincipalForm.getmyEmpresaVentas().getMyGuias().get(i).getId();
+        String nom = this.myPrincipalForm.getmyEmpresaVentas().getMyGuias().get(i).getNombre();
+        int pre = this.myPrincipalForm.getmyEmpresaVentas().getMyGuias().get(i).getPrecioVenta();
         Object[] nuevaFila = {id, nom, pre};
-        this.dtm_Productos.addRow(nuevaFila);
+        this.dtm_Guias.addRow(nuevaFila);
     }
-    this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().clear(); */   
+    this.myPrincipalForm.getmyEmpresaVentas().getMyGuias().clear(); */   
 }
 
-private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
+private void tablaGuiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaGuiasMouseClicked
 // TODO add your handling code here:
     if(evt.getClickCount() > 1){
         this.cmdEditarActionPerformed(null);
     }
-}//GEN-LAST:event_tablaProductosMouseClicked
+}//GEN-LAST:event_tablaGuiasMouseClicked
 
-private void mostrarFichaProductos(int id, String nomProd){
-    this.myJDialogFichaProducto = new JDialogFichaProducto(this.myPrincipalForm, true, 
-            this, id, nomProd, true);
-    this.myJDialogFichaProducto.setVisible(true);
+private void mostrarFichaGuias(int id){
+    this.myJDialogFichaGuia = new JDialogFichaGuia(this.myPrincipalForm, true, 
+            this, id, true);
+    this.myJDialogFichaGuia.setVisible(true);
 }
-
-private void cmdNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNuevoActionPerformed
-// TODO add your handling code here:
-    int id = 1 ; //this.myPrincipalForm.getmyEmpresaVentas().getNumProducto();
-    String nom = "";
-    this.myJDialogFichaProducto = new JDialogFichaProducto(this.myPrincipalForm, true, 
-            this, id, nom, false);
-    this.myJDialogFichaProducto.setVisible(true);
-}//GEN-LAST:event_cmdNuevoActionPerformed
-
-private void cmdNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdNuevoKeyPressed
-// TODO add your handling code here:
-    int t=(int) evt.getKeyChar();
-    if(t==10){
-        this.cmdNuevoActionPerformed(null);
-    }
-}//GEN-LAST:event_cmdNuevoKeyPressed
 
 private void cmdEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEditarActionPerformed
 // TODO add your handling code here:
-    if(tablaProductos.getRowCount() > 0 && tablaProductos.getSelectedRowCount() > 0){
-        int ind = tablaProductos.getSelectedRow();
-        int id = Integer.parseInt(this.dtm_Productos.getValueAt(ind, 0).toString());
-        String nomProd = this.dtm_Productos.getValueAt(ind, 1).toString();
-        this.mostrarFichaProductos(id, nomProd);
+    /*if(tablaGuias.getRowCount() > 0 && tablaGuias.getSelectedRowCount() > 0){
+        int ind = tablaGuias.getSelectedRow();
+        int id = Integer.parseInt(this.dtm_Guias.getValueAt(ind, 0).toString());
     }
     else{
-        Ventana.imp("Seleccione un producto para editar.", "SISTEMA");
-    }
+        Ventana.imp("Seleccione una Guia para editar.", "SISTEMA");
+    }*/
+        this.mostrarFichaGuias(1);
 }//GEN-LAST:event_cmdEditarActionPerformed
 
 private void cmdEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdEditarKeyPressed
@@ -319,14 +281,14 @@ private void cmdEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 
 private void cmdEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEliminarActionPerformed
 // TODO add your handling code here:
-    /*if(tablaProductos.getRowCount() > 0 && tablaProductos.getSelectedRowCount() > 0){
-        int ind = tablaProductos.getSelectedRow();
-        String nom = this.dtm_Productos.getValueAt(ind, 1).toString();
+    /*if(tablaGuias.getRowCount() > 0 && tablaGuias.getSelectedRowCount() > 0){
+        int ind = tablaGuias.getSelectedRow();
+        String nom = this.dtm_Guias.getValueAt(ind, 1).toString();
         int id = this.myPrincipalForm.getmyEmpresaVentas().getIdProducto(nom);
         String msg = this.myPrincipalForm.getmyEmpresaVentas().eliminarProducto(id);
         if(msg.equalsIgnoreCase("Producto eliminado Correctamente.")){
             Ventana.imp(msg, "SISTEMA.");
-            this.cargarTablaProductos("where activo = '1' ");
+            this.cargarTablaGuias("where activo = '1' ");
         }
         else
             Ventana.imp(msg, "SISTEMA.");
@@ -359,9 +321,6 @@ private void cmdSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
 private void cmdPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdPrintActionPerformed
 // TODO add your handling code here:
-    /*String sql = "SELECT producto.`id` AS producto_id, producto.`nombre` AS producto_nombre, " +
-            "producto.`precioVenta` AS producto_precioVenta, producto.`cantidadActual` AS producto_cantidadActual FROM `producto` producto";
-    this.myReportes.generarReportes(sql, "Productos");*/
 }//GEN-LAST:event_cmdPrintActionPerformed
 
 private void cmdPrintKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdPrintKeyPressed
@@ -371,7 +330,6 @@ private void cmdPrintKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdEditar;
     private javax.swing.JButton cmdEliminar;
-    private javax.swing.JButton cmdNuevo;
     private javax.swing.JButton cmdPrint;
     private javax.swing.JButton cmdSalir;
     private javax.swing.ButtonGroup grupoBotonBuscar;
@@ -380,8 +338,7 @@ private void cmdPrintKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JToolBar.Separator jSeparator11;
     private javax.swing.JToolBar.Separator jSeparator12;
     private javax.swing.JToolBar.Separator jSeparator14;
-    private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JTable tablaProductos;
+    private javax.swing.JTable tablaGuias;
     // End of variables declaration//GEN-END:variables
 }

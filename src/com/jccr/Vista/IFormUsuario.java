@@ -6,8 +6,9 @@
 package com.jccr.Vista;
 
 /**
- *
- * @author JCarvajal Software
+ * Formulario de Guias de envios de productos
+ * @author Grupo 4 Plataformas de Desarrollo de Software
+ * Version 1.0
  */
 public class IFormUsuario extends javax.swing.JInternalFrame {
 

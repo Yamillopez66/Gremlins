@@ -1,7 +1,8 @@
 /*
  * FormPrincipal.java
- *
- * Created on 4 de marzo de 2014, 10:57 PM
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 package com.jccr.Vista;
@@ -11,14 +12,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 /**
- *
- * @author  JUAN CARLOS
+ * Formulario Principal de la aplicación
+ * @author Grupo 4 Plataformas de Desarrollo de Software
+ * Version 1.0
  */
 public class FormPrincipal extends javax.swing.JFrame {
 
     private IFormProductos myIFormProductos;
     private IFormUsuario myIFormUsuario;
-    //private JDialogFichaCliente myJDialogFichaCliente;
+    private IFormGuias myIFormGuias;
     
     /** 
      * Creates new form FormPrincipal
@@ -213,7 +215,14 @@ public boolean verificarVentana(Object obj){
 
 private void cmdFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFacturasActionPerformed
 // TODO add your handling code here:
-    
+    if(this.verificarVentana(this.myIFormGuias)){
+        this.myIFormGuias = new IFormGuias(this);
+        this.jDesktopPanelPrincipal.add(this.myIFormGuias);
+        this.myIFormGuias.show();
+    }
+    else{
+        Ventana.warning("La ventana Guias ya esta abierta.", "SISTEMA");
+    }
 }//GEN-LAST:event_cmdFacturasActionPerformed
 
 private void cmdFacturasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdFacturasKeyPressed

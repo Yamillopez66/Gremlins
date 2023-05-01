@@ -1,5 +1,5 @@
 /*
- * JDialogFichaProducto.java
+ * JDialogFichaGuia.java
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,24 +14,23 @@ import Complementos.*;
  * @author Grupo 4 Plataformas de Desarrollo de Software
  * Version 1.0
  */
-public class JDialogFichaProducto extends javax.swing.JDialog {
+public class JDialogFichaGuia extends javax.swing.JDialog {
 
     private FormPrincipal myPrincipalForm;
-    private IFormProductos myIFormProductos;
+    private IFormGuias myIFormGuias;
     private String nom = "";
     private int id = 0;
     private boolean editar = false; 
     
     /** Creates new form JDialogFichaProducto */
-    public JDialogFichaProducto(FormPrincipal myPrincipalForm, boolean modal, IFormProductos myIFormProductos, int id, String nom, 
-            boolean editar) {
+    public JDialogFichaGuia(FormPrincipal myPrincipalForm, boolean modal, 
+            IFormGuias myIFormGuias, int id, boolean editar) {
         super(myPrincipalForm, modal);
         initComponents();
         this.myPrincipalForm = myPrincipalForm;
-        this.myIFormProductos = myIFormProductos;
+        this.myIFormGuias = myIFormGuias;
         this.id = id;
         this.editar = editar;
-        this.nom = nom;
         this.setLocation();
         this.inicio();
     }
@@ -49,12 +48,11 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         apellido = new javax.swing.JLabel();
         precioComp = new javax.swing.JLabel();
         dir = new javax.swing.JLabel();
-        txtPrecioVenta = new javax.swing.JTextField();
-        txtPrecioCompra = new javax.swing.JTextField();
+        txtDestino = new javax.swing.JTextField();
+        txtOrigen = new javax.swing.JTextField();
         idnun3 = new javax.swing.JLabel();
         txtNomProducto = new javax.swing.JTextField();
         txtCantActual = new javax.swing.JTextField();
-        cmdVerificarProducto = new javax.swing.JButton();
         apellido1 = new javax.swing.JLabel();
         txtMarca = new javax.swing.JTextField();
         idnun4 = new javax.swing.JLabel();
@@ -62,48 +60,43 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         cmbEstado = new javax.swing.JComboBox();
         apellido3 = new javax.swing.JLabel();
         idnun5 = new javax.swing.JLabel();
-        txtProveedor = new javax.swing.JTextField();
+        txtComprador = new javax.swing.JTextField();
         cmdGuardarProducto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Producto");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        pnlProducto1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto Simple", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        pnlProducto1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Guia del Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         pnlProducto1.setName("Datos del propietario"); // NOI18N
 
         apellido.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        apellido.setText("Cantidad Actual");
-        apellido.setPreferredSize(null);
+        apellido.setText("Fecha Compra");
         apellido.setRequestFocusEnabled(false);
 
         precioComp.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        precioComp.setText("Precio compra");
-        precioComp.setPreferredSize(null);
+        precioComp.setText("Origen");
         precioComp.setRequestFocusEnabled(false);
 
         dir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        dir.setText("Precio Venta");
+        dir.setText("Destino");
 
-        txtPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtPrecioVenta.setEnabled(false);
-        txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtDestino.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtDestino.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioVentaKeyTyped(evt);
+                txtDestinoKeyTyped(evt);
             }
         });
 
-        txtPrecioCompra.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtPrecioCompra.setEnabled(false);
-        txtPrecioCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtOrigen.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtOrigen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioCompraKeyTyped(evt);
+                txtOrigenKeyTyped(evt);
             }
         });
 
         idnun3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        idnun3.setText("Nombre");
-        idnun3.setPreferredSize(null);
+        idnun3.setText("Producto");
         idnun3.setRequestFocusEnabled(false);
 
         txtNomProducto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -113,35 +106,21 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         });
 
         txtCantActual.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtCantActual.setText("0");
-        txtCantActual.setEnabled(false);
+        txtCantActual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantActualActionPerformed(evt);
+            }
+        });
         txtCantActual.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantActualKeyTyped(evt);
             }
         });
 
-        cmdVerificarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        cmdVerificarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/15. Buscar.png"))); // NOI18N
-        cmdVerificarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdVerificarProductoActionPerformed(evt);
-            }
-        });
-        cmdVerificarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdVerificarProductoKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                cmdVerificarProductoKeyTyped(evt);
-            }
-        });
-
         apellido1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        apellido1.setText("Marca");
+        apellido1.setText("Fecha Entrega");
 
         txtMarca.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtMarca.setEnabled(false);
         txtMarca.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMarcaKeyTyped(evt);
@@ -149,8 +128,7 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         });
 
         idnun4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        idnun4.setText("No");
-        idnun4.setPreferredSize(null);
+        idnun4.setText("No. Guia");
         idnun4.setRequestFocusEnabled(false);
 
         txtIdProducto.setEnabled(false);
@@ -162,13 +140,12 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         apellido3.setText("Estado");
 
         idnun5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        idnun5.setText("Proveedor");
-        idnun5.setPreferredSize(null);
+        idnun5.setText("Comprador");
         idnun5.setRequestFocusEnabled(false);
 
-        txtProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtComprador.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtProveedorKeyPressed(evt);
+                txtCompradorKeyPressed(evt);
             }
         });
 
@@ -179,38 +156,33 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
             .addGroup(pnlProducto1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(idnun4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(idnun3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(precioComp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(apellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(idnun5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProducto1Layout.createSequentialGroup()
-                        .addComponent(txtProveedor)
+                        .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdVerificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlProducto1Layout.createSequentialGroup()
-                        .addComponent(txtIdProducto)
+                        .addComponent(txtCantActual, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(apellido3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(143, 143, 143)
-                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProducto1Layout.createSequentialGroup()
+                        .addComponent(apellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlProducto1Layout.createSequentialGroup()
                         .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtCantActual, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-                            .addComponent(txtPrecioCompra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                        .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idnun4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idnun3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(precioComp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idnun5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlProducto1Layout.createSequentialGroup()
-                                .addComponent(dir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlProducto1Layout.createSequentialGroup()
-                                .addComponent(apellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(txtNomProducto))
+                                .addComponent(txtIdProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(apellido3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(143, 143, 143)
+                                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtOrigen)
+                            .addComponent(txtNomProducto)
+                            .addComponent(txtDestino)
+                            .addComponent(txtComprador))))
                 .addContainerGap())
         );
         pnlProducto1Layout.setVerticalGroup(
@@ -221,23 +193,23 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
                     .addComponent(txtIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(apellido3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idnun3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idnun5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(idnun5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmdVerificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(precioComp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dir, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCantActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(apellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,13 +233,14 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(cmdGuardarProducto)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdGuardarProducto)
-                .addGap(255, 255, 255))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,15 +275,15 @@ public final void inicio(){
 public void habilitarCampos(){
     this.txtNomProducto.setEditable(false);
     //this.cmdVerificarProducto.setEnabled(false);
-    this.txtPrecioVenta.setEnabled(true);
+    this.txtDestino.setEnabled(true);
     this.cmdGuardarProducto.setEnabled(true);
-    this.txtPrecioVenta.grabFocus();
+    this.txtDestino.grabFocus();
 }
 
 public void deshabilitarCampos(){
     this.txtNomProducto.setEditable(true);
     //this.cmdVerificarProducto.setEnabled(true);
-    this.txtPrecioVenta.setEnabled(false);
+    this.txtDestino.setEnabled(false);
     this.cmdGuardarProducto.setEnabled(false);
 }
 
@@ -419,94 +392,33 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
     }
 }//GEN-LAST:event_cmdGuardarProductoActionPerformed
 
-    private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
+    private void txtDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDestinoKeyTyped
         // TODO add your handling code here:
-        this.txtPrecioVenta.setText(this.txtPrecioVenta.getText().trim());
-        if(this.txtPrecioVenta.getText().length() >= 10) {
-            evt.consume();
-        }
-        else {
-            int ascii = evt.getKeyChar();
-            if(ascii < 48 || ascii > 57) {
-                evt.consume();
-            }
-        }
-    }//GEN-LAST:event_txtPrecioVentaKeyTyped
+    }//GEN-LAST:event_txtDestinoKeyTyped
 
-    private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
+    private void txtOrigenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOrigenKeyTyped
         // TODO add your handling code here:
-        this.txtPrecioCompra.setText(this.txtPrecioCompra.getText().trim());
-        if(this.txtPrecioCompra.getText().length() >= 10) {
-            evt.consume();
-        }
-        else {
-            int ascii = evt.getKeyChar();
-            if(ascii < 48 || ascii > 57) {
-                evt.consume();
-            }
-        }
-    }//GEN-LAST:event_txtPrecioCompraKeyTyped
+    }//GEN-LAST:event_txtOrigenKeyTyped
 
     private void txtNomProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomProductoKeyPressed
         // TODO add your handling code here:
-        int t=(int) evt.getKeyChar();
-        if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
-        }
     }//GEN-LAST:event_txtNomProductoKeyPressed
 
     private void txtCantActualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantActualKeyTyped
         // TODO add your handling code here:
-        this.txtCantActual.setText(this.txtCantActual.getText().trim());
-        if(this.txtCantActual.getText().length() >= 10) {
-            evt.consume();
-        }
-        else {
-            int ascii = evt.getKeyChar();
-            if(ascii < 48 || ascii > 57) {
-                evt.consume();
-            }
-        }
     }//GEN-LAST:event_txtCantActualKeyTyped
-
-    private void cmdVerificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdVerificarProductoActionPerformed
-        // TODO add your handling code here:
-        String ref = this.txtIdProducto.getText();
-        String nombreProducto = this.txtNomProducto.getText();
-        if(ref.equalsIgnoreCase("")){
-            Ventana.imp("Digite el número de la referencia", "SISTEMA");
-            this.txtIdProducto.grabFocus();
-        }
-        else
-        if(nombreProducto.equalsIgnoreCase("")){
-            Ventana.imp("Digite el nombre del producto.", "SISTEMA");
-            this.txtNomProducto.grabFocus();
-        }
-    }//GEN-LAST:event_cmdVerificarProductoActionPerformed
-
-    private void cmdVerificarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdVerificarProductoKeyPressed
-        // TODO add your handling code here:
-        int t=(int) evt.getKeyChar();
-        if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
-        }
-    }//GEN-LAST:event_cmdVerificarProductoKeyPressed
-
-    private void cmdVerificarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdVerificarProductoKeyTyped
-        // TODO add your handling code here:
-        int t=(int) evt.getKeyChar();
-        if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
-        }
-    }//GEN-LAST:event_cmdVerificarProductoKeyTyped
 
     private void txtMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMarcaKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMarcaKeyTyped
 
-    private void txtProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProveedorKeyPressed
+    private void txtCompradorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCompradorKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProveedorKeyPressed
+    }//GEN-LAST:event_txtCompradorKeyPressed
+
+    private void txtCantActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantActualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantActualActionPerformed
    
     /**
     * @param args the command line arguments
@@ -531,7 +443,6 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JLabel apellido3;
     private javax.swing.JComboBox cmbEstado;
     private javax.swing.JButton cmdGuardarProducto;
-    private javax.swing.JButton cmdVerificarProducto;
     private javax.swing.JLabel dir;
     private javax.swing.JLabel idnun3;
     private javax.swing.JLabel idnun4;
@@ -539,12 +450,12 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JPanel pnlProducto1;
     private javax.swing.JLabel precioComp;
     private javax.swing.JTextField txtCantActual;
+    private javax.swing.JTextField txtComprador;
+    private javax.swing.JTextField txtDestino;
     private javax.swing.JTextField txtIdProducto;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNomProducto;
-    private javax.swing.JTextField txtPrecioCompra;
-    private javax.swing.JTextField txtPrecioVenta;
-    private javax.swing.JTextField txtProveedor;
+    private javax.swing.JTextField txtOrigen;
     // End of variables declaration//GEN-END:variables
 
 }

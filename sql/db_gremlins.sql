@@ -45,7 +45,6 @@ CREATE TABLE `producto` (
   `idProducto` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(45) NOT NULL,
   `Proveedor` varchar(45) NOT NULL,
-  `NID_Proveedor` int(11) NOT NULL,
   `Marca` varchar(45) DEFAULT NULL,
   `Precio Compra` int(11) DEFAULT NULL,
   `Precio_Venta` int(11) DEFAULT NULL,
