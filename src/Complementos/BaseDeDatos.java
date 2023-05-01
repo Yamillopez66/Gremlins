@@ -22,7 +22,7 @@ public class BaseDeDatos {
     //Host de la Base de datos.
     private static final String PUERTO = "3306";
     //Host de la Base de datos.
-    private static final String BASEDATOS = "gestion_mvc_bd";
+    private static final String BASEDATOS = "db_gremlins";
     //controlador de la base de datos.
     private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
     //Usuario de la Base de datos.

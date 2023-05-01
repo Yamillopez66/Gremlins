@@ -1,19 +1,24 @@
 package com.jccr.Controlador;
 
+import Complementos.BaseDeDatos;
 import com.jccr.Modelo.Usuario;
 import com.jccr.Modelo.UsuarioDAO;
-import com.jccr.Vista.frmUsuario;
+import com.jccr.Vista.IFormUsuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class CtrlUsuario implements ActionListener {
 
     private final Usuario mod;
     private final UsuarioDAO modC;
-    private final frmUsuario frm;
+    private final IFormUsuario frm;
 
-    public CtrlUsuario(Usuario mod, UsuarioDAO modC, frmUsuario frm) {
+    //atributo que representa la conexion a la base de datos
+    private BaseDeDatos myBaseDeDatos;
+
+    public CtrlUsuario(Usuario mod, UsuarioDAO modC, IFormUsuario frm) {
         this.mod = mod;
         this.modC = modC;
         this.frm = frm;
@@ -22,14 +27,49 @@ public class CtrlUsuario implements ActionListener {
         this.frm.jbtEliminar.addActionListener(this);
         this.frm.jbtBuscar.addActionListener(this);
         this.frm.jbtLimpiar.addActionListener(this);
+        
+        try {
+            myBaseDeDatos = new BaseDeDatos();
+            //myBaseDeDatos = new BaseDeDatos(true);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void iniciar() {
         frm.setTitle("Usuarios");
-        frm.setLocationRelativeTo(null);
         frm.txtIdusuario.setVisible(false);
     }
 
+    
+    
+    /**
+     * Verifica si este usuario existe en la base de datos
+     *
+     * @param Correo un String con el nombre de usuario.
+     * @param clave un String con la clave del usuario.
+     * @return un boolean true si la identificacion del usuario es correcta.
+     */
+    public boolean verificarUsuario(String Correo, String clave){
+        boolean ver = false;
+        String sql = "SELECT * FROM USUARIO WHERE PASSWORD = '"+clave+"' AND Correo = '"+Correo+"'";
+        ArrayList<String> consulta;
+        consulta = myBaseDeDatos.getConsultaSQL(sql);
+        if (consulta == null) {
+            return ver;
+        } else {
+            for (String registro : consulta) {
+                String datos[] = registro.split("#_");
+                String usu = datos[6];
+                String cla = datos[9];
+                if (usu.equalsIgnoreCase(Correo) && cla.equalsIgnoreCase(clave)) {
+                    ver = true;
+                }
+            }
+            return ver;
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == frm.jbtInsertar) {

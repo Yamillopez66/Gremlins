@@ -1,10 +1,12 @@
 
 package com.jccr.Modelo;
 
+import Complementos.BaseDeDatos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,6 +14,39 @@ import java.sql.SQLException;
  */
 public class UsuarioDAO extends Conexion {
 
+    /**
+     * Verifica si este usuario existe en la base de datos
+     *
+     * @param bd conexion a la base de datos
+     * @param Correo un String con el nombre de usuario.
+     * @param clave un String con la clave del usuario.
+     * @return un boolean true si la identificacion del usuario es correcta.
+     */
+    public boolean verificarUsuario(BaseDeDatos bd, String Correo, String clave){
+        boolean ver = false;
+        String sql = "SELECT * FROM USUARIO WHERE PASSWORD = '"+clave+"' AND Correo = '"+Correo+"'";
+        ArrayList<String> consulta;
+        consulta = bd.getConsultaSQL(sql);
+        if (consulta == null) {
+            return ver;
+        } else {
+            for (String registro : consulta) {
+                String datos[] = registro.split("#_");
+                String usu = datos[2];
+                String cla = datos[3];
+                if (usu.equalsIgnoreCase(Correo) && cla.equalsIgnoreCase(clave)) {
+                    ver = true;
+                }
+            }
+            return ver;
+        }
+    }
+    
+    /**
+     * 
+     * @param usu
+     * @return 
+     */
     public boolean insertar(Usuario usu) {
         PreparedStatement ps = null;
         Connection con = getConection();
