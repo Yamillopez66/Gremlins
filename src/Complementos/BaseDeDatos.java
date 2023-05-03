@@ -28,7 +28,7 @@ public class BaseDeDatos {
     //Usuario de la Base de datos.
     private static final String LOGIN = "root";
     //Clave de la Base de datos.
-    private static final String PASSWORD = "b0l1a9.N2C8A3";
+    private static final String PASSWORD = "CJSUAREZm4747";
     //Direccion de acceso a la Base de datos del servidor.
     private static final String URLLOCAL = DRIVER+"://"+HOST+":"+PUERTO+"/"+BASEDATOS;
     

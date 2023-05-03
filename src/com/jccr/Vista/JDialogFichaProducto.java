@@ -369,22 +369,13 @@ private void editarProducto(){
 }
 
 private void agregarProducto(){
-    /*if(this.verificarCampos()){
-        int tipoVenta = 1;
-        int cantMinima = 0;
-        int activo = 1;
+    if(this.verificarCampos()){
         int idProd = Integer.parseInt(this.txtIdProducto.getText());
-        String referencia = "";
         String nombreProducto = this.txtNomProducto.getText();
-        int precioCompra = 0;
+        int precioCompra = Integer.parseInt(this.txtPrecioCompra.getText());
         int precioVenta = Integer.parseInt(this.txtPrecioVenta.getText());
-        int cantActual = 0;
-        String estado = this.cmbEstado.getSelectedItem().toString();
-        if(estado.equalsIgnoreCase("Activo"))
-            activo = 1;
-        else 
-            if(estado.equalsIgnoreCase("Inactivo"))
-                activo = 0;
+        int cantActual = Integer.parseInt(this.txtCantActual.getText());
+        String marca = this.txtMarca.getText();
         String msg = this.myPrincipalForm.getmyEmpresaVentas().registrarProductoBD(idProd, referencia, 
                 nombreProducto.toUpperCase(), precioCompra, precioVenta, cantActual, cantMinima, tipoVenta, activo);
         if(msg.equalsIgnoreCase("Producto ingresado exitosamente.")){
@@ -404,6 +395,12 @@ private boolean verificarCampos(){
     if(estado.equalsIgnoreCase("Seleccione")){
         Ventana.err("Seleccione el estado del producto.", "SISTEMA");
         this.cmbEstado.grabFocus();
+        return false;
+    }
+    String nombre = this.txtNomProducto.getText();
+    if(nombre.equalsIgnoreCase("")){
+        Ventana.err("Digite el nombre del producto.", "SISTEMA");
+        this.txtNomProducto.grabFocus();
         return false;
     }
     return true;
