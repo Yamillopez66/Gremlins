@@ -55,6 +55,7 @@ public class CtrlUsuario implements ActionListener {
         String sql = "SELECT * FROM USUARIO WHERE PASSWORD = '"+clave+"' AND Correo = '"+Correo+"'";
         ArrayList<String> consulta;
         consulta = myBaseDeDatos.getConsultaSQL(sql);
+        System.err.println("Consulta"+consulta);
         if (consulta == null) {
             return ver;
         } else {
