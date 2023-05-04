@@ -12,25 +12,44 @@ public class Producto {
     private int idProducto;
     private String Descripcion;
     private String Proveedor;
-    private int NID_Proveedor;
     private String Marca;
     private int Precio_Compra;
     private int Precio_Venta;
     private int Cantidad;
 
-    public int getNID_Proveedor() {
-        return NID_Proveedor;
+    /**
+     * Metodo constructor para crear clase producto
+     * @param idProducto
+     * @param Descripcion
+     * @param Proveedor
+     * @param Marca
+     * @param Precio_Compra
+     * @param Precio_Venta
+     * @param Cantidad 
+     */
+    public Producto(int idProducto, String Descripcion, String Proveedor, String Marca, int Precio_Compra, int Precio_Venta, int Cantidad) {
+        this.idProducto = idProducto;
+        this.Descripcion = Descripcion;
+        this.Proveedor = Proveedor;
+        this.Marca = Marca;
+        this.Precio_Compra = Precio_Compra;
+        this.Precio_Venta = Precio_Venta;
+        this.Cantidad = Cantidad;
     }
 
-    public void setNID_Proveedor(int NID_Proveedor) {
-        this.NID_Proveedor = NID_Proveedor;
+    public Producto() {
     }
 
-    public int getidProducto() {
+    
+    public int getIdProducto() {
         return idProducto;
     }
 
-    public void setidProducto(int idProducto) {
+    /**
+     * 
+     * @param idProducto 
+     */
+    public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -81,6 +100,8 @@ public class Producto {
     public void setCantidad(int Cantidad) {
         this.Cantidad = Cantidad;
     }
+    
+    
     
     
     

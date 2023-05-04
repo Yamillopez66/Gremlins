@@ -8,6 +8,7 @@
 package com.jccr.Vista;
 
 import Complementos.*;
+import com.jccr.Controlador.CtrlProducto;
 
 /**
  * Formulario de Guias de envios de productos
@@ -54,7 +55,6 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         idnun3 = new javax.swing.JLabel();
         txtNomProducto = new javax.swing.JTextField();
         txtCantActual = new javax.swing.JTextField();
-        cmdVerificarProducto = new javax.swing.JButton();
         apellido1 = new javax.swing.JLabel();
         txtMarca = new javax.swing.JTextField();
         idnun4 = new javax.swing.JLabel();
@@ -86,7 +86,6 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         dir.setText("Precio Venta");
 
         txtPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtPrecioVenta.setEnabled(false);
         txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrecioVentaKeyTyped(evt);
@@ -94,7 +93,6 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         });
 
         txtPrecioCompra.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtPrecioCompra.setEnabled(false);
         txtPrecioCompra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrecioCompraKeyTyped(evt);
@@ -114,26 +112,9 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
 
         txtCantActual.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtCantActual.setText("0");
-        txtCantActual.setEnabled(false);
         txtCantActual.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantActualKeyTyped(evt);
-            }
-        });
-
-        cmdVerificarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        cmdVerificarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/15. Buscar.png"))); // NOI18N
-        cmdVerificarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdVerificarProductoActionPerformed(evt);
-            }
-        });
-        cmdVerificarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdVerificarProductoKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                cmdVerificarProductoKeyTyped(evt);
             }
         });
 
@@ -141,7 +122,6 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         apellido1.setText("Marca");
 
         txtMarca.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtMarca.setEnabled(false);
         txtMarca.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMarcaKeyTyped(evt);
@@ -188,8 +168,7 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProducto1Layout.createSequentialGroup()
                         .addComponent(txtProveedor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdVerificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39))
                     .addGroup(pnlProducto1Layout.createSequentialGroup()
                         .addComponent(txtIdProducto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -225,12 +204,10 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idnun3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(idnun5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmdVerificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idnun5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProducto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(precioComp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,7 +226,6 @@ public class JDialogFichaProducto extends javax.swing.JDialog {
         cmdGuardarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cmdGuardarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Guardar.png"))); // NOI18N
         cmdGuardarProducto.setText("Guardar");
-        cmdGuardarProducto.setEnabled(false);
         cmdGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdGuardarProductoActionPerformed(evt);
@@ -298,96 +274,70 @@ public final void inicio(){
         this.consultarProducto();
     }
 }
-    
-public void habilitarCampos(){
-    this.txtNomProducto.setEditable(false);
-    //this.cmdVerificarProducto.setEnabled(false);
-    this.txtPrecioVenta.setEnabled(true);
-    this.cmdGuardarProducto.setEnabled(true);
-    this.txtPrecioVenta.grabFocus();
-}
-
-public void deshabilitarCampos(){
-    this.txtNomProducto.setEditable(true);
-    //this.cmdVerificarProducto.setEnabled(true);
-    this.txtPrecioVenta.setEnabled(false);
-    this.cmdGuardarProducto.setEnabled(false);
-}
 
 public void limpiarCampos(){
     this.txtNomProducto.setText("");
 }
 
 public void consultarProducto(){
-    /*int idProd = Integer.parseInt(this.txtIdProducto.getText());
-    if(this.myPrincipalForm.getmyEmpresaVentas().verificarProductoId(idProd)){
-        this.habilitarCampos();
+    int idProd = Integer.parseInt(this.txtIdProducto.getText());
+    
         this.txtNomProducto.setEditable(true);
-        int val = this.myPrincipalForm.getmyEmpresaVentas().buscarPrecioVentaProducto(idProd);
-        int estado = this.myPrincipalForm.getmyEmpresaVentas().buscarEstadoProducto(idProd);
-        this.txtPrecioVenta.setText(String.valueOf(val));
-        if(estado == 1){
-            this.cmbEstado.setActionCommand("A");
-        }
-        else{
-            this.cmbEstado.setSelectedItem("I");
-        }
-    }
-    else
-        Ventana.imp("El Producto no ha sido registrado.", "SISTEMA");*/
+        int cant = this.myIFormProductos.getMyCtrlProducto().buscarCantidad(idProd);
+        String prov = this.myIFormProductos.getMyCtrlProducto().buscarProveedor(idProd);
+        String marc = this.myIFormProductos.getMyCtrlProducto().buscarMarca(idProd);
+        String Desc = this.myIFormProductos.getMyCtrlProducto().buscarNombreProducto(idProd);
+        int prev = this.myIFormProductos.getMyCtrlProducto().buscarPrecio_Venta(idProd);
+        this.txtProveedor.setText(prov);
+        this.txtCantActual.setText(String.valueOf(cant));
+        this.txtPrecioVenta.setText(String.valueOf(prev));
+        this.txtMarca.setText(marc);
+        this.txtNomProducto.setText(Desc);
+        
 }
 
 private void editarProducto(){
-    /*if(this.verificarCampos()){
-        int tipo = 1;
-        int cantMinima = 0;
-        int activo = 1;
-        String referencia = "";
-        int idProd = Integer.parseInt(this.txtIdProducto.getText());
-        String nombreProducto = this.txtNomProducto.getText();
-        int precioVenta = Integer.parseInt(this.txtPrecioVenta.getText());
-        int precioCompra = 0;
-        int cantActual = 0;
-        int cantCompra = 0;
-        cantActual = cantActual + cantCompra;
-        String estado = this.cmbEstado.getSelectedItem().toString();
-        if(estado.equalsIgnoreCase("Activo"))
-            activo = 1;
-        else 
-            if(estado.equalsIgnoreCase("Inactivo"))
-                activo = 0;
-        String msg = this.myPrincipalForm.getmyEmpresaVentas().modProductoBD(idProd, referencia, nombreProducto.toUpperCase(), 
-                precioCompra, precioVenta, cantActual, cantMinima, tipo, activo);
-        this.myIFormProductos.cargarTablaProductos("where activo = '1' ");
-        if(msg.equalsIgnoreCase("La informacion del Producto ha sido modificada exitosamente.")){
+    if(this.verificarCampos()){
+        String msg = "Producto modificado exitosamente.";
+        int idProducto = Integer.parseInt(this.txtIdProducto.getText());
+        String Descripcion = this.txtNomProducto.getText();
+        String Proveedor = this.txtProveedor.getText();
+        String Marca= this.txtMarca.getText();
+        int Precio_Compra = Integer.parseInt(this.txtPrecioCompra.getText());
+        int Precio_Venta = Integer.parseInt(this.txtPrecioVenta.getText());
+        int Cantidad = Integer.parseInt(this.txtCantActual.getText());
+        boolean rta = this.myIFormProductos.getMyCtrlProducto().editarProductoBD(idProducto, Descripcion, Proveedor, Marca, Precio_Compra, Precio_Venta, Cantidad);
+        if(rta){
             Ventana.imp(msg, "SISTEMA");
+            this.limpiarCampos();
+            this.myIFormProductos.cargarTablaProductos("");
             this.dispose();
         }
         else
             Ventana.imp(msg, "SISTEMA");
-    }*/
+    }
 }
 
 private void agregarProducto(){
     if(this.verificarCampos()){
-        int idProd = Integer.parseInt(this.txtIdProducto.getText());
-        String nombreProducto = this.txtNomProducto.getText();
-        int precioCompra = Integer.parseInt(this.txtPrecioCompra.getText());
-        int precioVenta = Integer.parseInt(this.txtPrecioVenta.getText());
-        int cantActual = Integer.parseInt(this.txtCantActual.getText());
-        String marca = this.txtMarca.getText();
-        String msg = this.myPrincipalForm.getmyEmpresaVentas().registrarProductoBD(idProd, referencia, 
-                nombreProducto.toUpperCase(), precioCompra, precioVenta, cantActual, cantMinima, tipoVenta, activo);
-        if(msg.equalsIgnoreCase("Producto ingresado exitosamente.")){
+        String msg = "Producto ingresado exitosamente.";
+        int idProducto = Integer.parseInt(this.txtIdProducto.getText());
+        String Descripcion = this.txtNomProducto.getText();
+        String Proveedor = this.txtProveedor.getText();
+        String Marca= this.txtMarca.getText();
+        int Precio_Compra = Integer.parseInt(this.txtPrecioCompra.getText());
+        int Precio_Venta = Integer.parseInt(this.txtPrecioVenta.getText());
+        int Cantidad = Integer.parseInt(this.txtCantActual.getText());
+        boolean rta = this.myIFormProductos.getMyCtrlProducto().registrarProductoBD(idProducto, Descripcion, Proveedor, Marca, Precio_Compra, Precio_Venta, Cantidad);
+        if(rta){
             Ventana.imp(msg, "SISTEMA");
             this.limpiarCampos();
-            this.deshabilitarCampos();
-            this.myIFormProductos.cargarTablaProductos("where activo = '1' ");
+            this.myIFormProductos.cargarTablaProductos("");
             this.dispose();
         }
         else
             Ventana.imp(msg, "SISTEMA");
-    }*/
+    }
 }
 
 private boolean verificarCampos(){
@@ -448,7 +398,6 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         int t=(int) evt.getKeyChar();
         if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
         }
     }//GEN-LAST:event_txtNomProductoKeyPressed
 
@@ -465,37 +414,6 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
             }
         }
     }//GEN-LAST:event_txtCantActualKeyTyped
-
-    private void cmdVerificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdVerificarProductoActionPerformed
-        // TODO add your handling code here:
-        String ref = this.txtIdProducto.getText();
-        String nombreProducto = this.txtNomProducto.getText();
-        if(ref.equalsIgnoreCase("")){
-            Ventana.imp("Digite el número de la referencia", "SISTEMA");
-            this.txtIdProducto.grabFocus();
-        }
-        else
-        if(nombreProducto.equalsIgnoreCase("")){
-            Ventana.imp("Digite el nombre del producto.", "SISTEMA");
-            this.txtNomProducto.grabFocus();
-        }
-    }//GEN-LAST:event_cmdVerificarProductoActionPerformed
-
-    private void cmdVerificarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdVerificarProductoKeyPressed
-        // TODO add your handling code here:
-        int t=(int) evt.getKeyChar();
-        if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
-        }
-    }//GEN-LAST:event_cmdVerificarProductoKeyPressed
-
-    private void cmdVerificarProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdVerificarProductoKeyTyped
-        // TODO add your handling code here:
-        int t=(int) evt.getKeyChar();
-        if(t==10){
-            this.cmdVerificarProductoActionPerformed(null);
-        }
-    }//GEN-LAST:event_cmdVerificarProductoKeyTyped
 
     private void txtMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMarcaKeyTyped
         // TODO add your handling code here:
@@ -528,7 +446,6 @@ private void cmdGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JLabel apellido3;
     private javax.swing.JComboBox cmbEstado;
     private javax.swing.JButton cmdGuardarProducto;
-    private javax.swing.JButton cmdVerificarProducto;
     private javax.swing.JLabel dir;
     private javax.swing.JLabel idnun3;
     private javax.swing.JLabel idnun4;

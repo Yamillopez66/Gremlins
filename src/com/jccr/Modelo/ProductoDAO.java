@@ -1,163 +1,89 @@
 package com.jccr.Modelo;
 
-import static com.jccr.Modelo.Conexion.getConection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Complementos.BaseDeDatos;
+import java.util.ArrayList;
 
 public class ProductoDAO extends Conexion {
+    Producto myProducto;
+
+    public ProductoDAO(Producto p) {
+        this.myProducto=p;
+        
+    }
     
-    public boolean insertar(Producto pro) {
-        PreparedStatement ps = null;
-        Connection con = getConection();
-        String sql = "INSERT INTO producto (idProducto,Descripcion,Proveedor,NID_Proveedor,Marca,Precio_Compra,Precio_Venta,Cantidad)"
-                + "values(?,?,?,?,?,?,?,?)";
-        try {
-
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, pro.getidProducto());
-            ps.setString(2, pro.getDescripcion());
-            ps.setString(3, pro.getProveedor());
-            ps.setInt(4, pro.getNID_Proveedor());
-            ps.setString(5,pro.getMarca());
-            ps.setInt(6, pro.getPrecio_Compra());
-            ps.setInt(7, pro.getPrecio_Venta());
-            ps.setInt(8, pro.getCantidad());
-
-            ps.execute();
-
-            return true;
-
-        } catch (SQLException e) {
-
-            System.err.println(e);
-            return false;
-
-        } finally {
-            try {
-
-                con.close();
-            } catch (SQLException e) {
-
-                System.err.println(e);
-                return false;
-            }
-
-        }
+    /**
+     * Metodo para registrar producto en la BD
+     * @param bd
+     * @return 
+     */    
+    public boolean registrarProductoBD(BaseDeDatos bd){
+        String sql = "INSERT INTO PRODUCTO (Descripcion, Proveedor, Marca, Precio_Compra, Precio_Venta, Cantidad) VALUES('"+
+                myProducto.getDescripcion()+"', '"+
+                myProducto.getProveedor()+"', '"+
+                myProducto.getMarca()+"', '"+
+                myProducto.getPrecio_Compra()+"', '"+
+                myProducto.getPrecio_Venta()+"', '"+
+                myProducto.getCantidad()+"')";
+         
+            return bd.ejecutarActualizacionSQL(sql);
     }
-    public boolean modificar(Producto pro) {
-        PreparedStatement ps = null;
-        Connection con = getConection();
-        String sql = "UPDATE Producto set idProducto = ?, Descripcion=?, Proveedor=?, NID_Proveedor=?, Marca=?, Precio_Compra=?, Precio_Venta=?, Cantidad=? "
-                + "WHERE idProducto = ?";
-        try {
+    
+    /**
+     * Metodo para editar usuario en BD
+     * @param bd
+     * @return 
+     */
+    public boolean editarProductoBD(BaseDeDatos bd){
+        String sql = "UPDATE Producto SET "
+                + "idProducto = '"+myProducto.getIdProducto()+"', " 
+                + "Descripcion = '"+myProducto.getDescripcion()+"', " 
+                + "Proveedor = '"+myProducto.getProveedor()+"', "
+                + "Marca = '"+myProducto.getMarca()+"', "
+                + "Precio_Compra = '"+myProducto.getPrecio_Compra()+"', "
+                + "Precio_Venta = '"+myProducto.getPrecio_Venta()+"', "
+                + "Cantidad = '"+myProducto.getCantidad()+"' " +
+                "WHERE idProducto = '"+myProducto.getIdProducto()+"'";
+        return bd.ejecutarActualizacionSQL(sql);
+    }
+    
+    /**
+     * Metodo para eliminar producto en BD
+     * @param bd
+     * @return 
+     */
+    public boolean eliminarProductoBD (BaseDeDatos bd) {
+        String sql = "DELETE FROM PRODUCTO WHERE idProducto = '"+myProducto.getIdProducto()+"'";
+        return bd.ejecutarActualizacionSQL(sql);
 
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, pro.getidProducto());
-            ps.setString(2, pro.getDescripcion());
-            ps.setString(3, pro.getProveedor());
-            ps.setInt(4, pro.getNID_Proveedor());
-            ps.setString(5, pro.getMarca());
-            ps.setInt(6, pro.getPrecio_Compra());
-            ps.setInt(7, pro.getPrecio_Venta());
-            ps.setInt(8, pro.getCantidad());
+    }
+    
+    /**
+     * Metodo para buscar producto en BD
+     * @param idProducto
+     * @param bd
+     * @return 
+     */
+    public Producto buscarProductoBD(int idProducto, BaseDeDatos bd) {
+        Producto pro = new Producto();
+        String sql = "SELECT * FROM Producto "
+                + "WHERE idProducto = '" + idProducto + "'";
+        ArrayList<String> consulta;
+        consulta = bd.getConsultaSQL(sql);
+        if (consulta.isEmpty()) {
+            return null;
+        }
+        for (String registro : consulta) {
+            String datos[] = registro.split("#_");
+            String Descripcion = datos[1];
+            String Proveedor = datos[2];
+            String Marca = datos[3];
+            int Precio_Compra = Integer.parseInt(datos[4]);
+            int Precio_Venta = Integer.parseInt(datos[5]);
+            int Cantidad = Integer.parseInt(datos[6]);
             
-            ps.execute();
-
-            return true;
-
-        } catch (SQLException e) {
-
-            System.err.println(e);
-            return false;
-
-        } finally {
-            try {
-
-                con.close();
-            } catch (SQLException e) {
-
-                System.err.println(e);
-                return false;
-            }
-
+            pro = new Producto(idProducto, Descripcion, Proveedor, Marca, Precio_Compra, Precio_Venta, Cantidad);
         }
-    }
-    public boolean eliminar(Producto pro) {
-        PreparedStatement ps = null;
-        Connection con = getConection();
-        String sql = "DELETE FROM Producto WHERE idProducto =?";
-        try {
-
-            ps = con.prepareStatement(sql);
-           
-            ps.setInt(1, pro.getidProducto());
-
-            ps.execute();
-
-            return true;
-
-        } catch (SQLException e) {
-
-            System.err.println(e);
-            return false;
-
-        } finally {
-            try {
-
-                con.close();
-            } catch (SQLException e) {
-
-                System.err.println(e);
-                return false;
-            }
-
-        }
-    }
-    public boolean buscar(Producto pro) {
-        PreparedStatement ps = null;
-        Connection con = getConection();
-        ResultSet rs = null;
-        String sql = "SELECT * FROM Producto WHERE idProducto = ?";
-        try {
-
-            ps = con.prepareStatement(sql);
-           
-            ps.setInt(1,pro.getidProducto());
-
-            rs = ps.executeQuery();
-            
-            if (rs.next())
-            {
-                pro.setidProducto(Integer.parseInt(rs.getString("idProducto")));
-                pro.setDescripcion(rs.getString("Descripcion"));
-                pro.setProveedor(rs.getString("Proveedor"));
-                pro.setNID_Proveedor(Integer.parseInt(rs.getString("NID_Proveedor")));
-                pro.setMarca(rs.getString("Marca"));
-                pro.setPrecio_Compra(Integer.parseInt(rs.getString("Precio_Compra")));
-                pro.setPrecio_Venta(Integer.parseInt(rs.getString("Precio_Venta")));
-                pro.setCantidad(Integer.parseInt(rs.getString("Cantidad")));
-            }
-
-            return false;
-
-        } catch (SQLException e) {
-
-            System.err.println(e);
-            return false;
-
-        } finally {
-            try {
-
-                con.close();
-            } catch (SQLException e) {
-
-                System.err.println(e);
-                return false;
-            }
-
-        }
+        return pro;
     }
     
 }

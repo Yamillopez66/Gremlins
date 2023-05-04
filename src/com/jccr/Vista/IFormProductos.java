@@ -8,6 +8,7 @@
 package com.jccr.Vista;
 
 import Complementos.*;
+import com.jccr.Controlador.CtrlProducto;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -25,16 +26,23 @@ public final class IFormProductos extends javax.swing.JInternalFrame {
     private DefaultTableModel dtm_Productos;
     private DefaultTableCellRenderer modeloCentrar = new DefaultTableCellRenderer();
     private DefaultTableCellRenderer modeloAlinearDerecha = new DefaultTableCellRenderer();
+    private CtrlProducto myCtrlProducto;
     
     /** Creates new form IFormCliente */
     public IFormProductos(FormPrincipal p) {
         initComponents();
         this.myPrincipalForm = p;
-        this.cargarTablaProductos("where activo = '1' ");
+        this.myCtrlProducto = new CtrlProducto();
+        this.cargarTablaProductos("");
         this.modeloCentrar.setHorizontalAlignment(SwingConstants.CENTER);
         this.modeloAlinearDerecha.setHorizontalAlignment(SwingConstants.RIGHT);
         this.setLocation();
     }
+
+    public CtrlProducto getMyCtrlProducto() {
+        return myCtrlProducto;
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -254,16 +262,19 @@ public void cargarTablaProductos(String where){
 }
 
 private void cargarProductos(String where){
-    /*this.myPrincipalForm.getmyEmpresaVentas().cargarTodosProductos(where);
-    int x = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().size();
+    this.myCtrlProducto.cargarProductos(where);
+    int x = this.myCtrlProducto.getMyProducto().size();
     for(int i = 0; i < x; i++){
-        int id = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getId();
-        String nom = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getNombre();
-        int pre = this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().get(i).getPrecioVenta();
-        Object[] nuevaFila = {id, nom, pre};
+        int id = this.myCtrlProducto.getMyProducto().get(i).getIdProducto();
+        String nom = this.myCtrlProducto.getMyProducto().get(i).getDescripcion();
+        String prov = this.myCtrlProducto.getMyProducto().get(i).getProveedor();
+        String marc = this.myCtrlProducto.getMyProducto().get(i).getMarca();
+        int prev = this.myCtrlProducto.getMyProducto().get(i).getPrecio_Venta();
+        int cant = this.myCtrlProducto.getMyProducto().get(i).getCantidad();
+        Object[] nuevaFila = {id, nom, prov, marc, prev, cant};
         this.dtm_Productos.addRow(nuevaFila);
     }
-    this.myPrincipalForm.getmyEmpresaVentas().getMyProductos().clear(); */   
+    this.myCtrlProducto.getMyProducto().clear(); 
 }
 
 private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
@@ -301,8 +312,12 @@ private void cmdEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     if(tablaProductos.getRowCount() > 0 && tablaProductos.getSelectedRowCount() > 0){
         int ind = tablaProductos.getSelectedRow();
         int id = Integer.parseInt(this.dtm_Productos.getValueAt(ind, 0).toString());
-        String nomProd = this.dtm_Productos.getValueAt(ind, 1).toString();
-        this.mostrarFichaProductos(id, nomProd);
+        String Descripcion = this.dtm_Productos.getValueAt(ind, 1).toString();
+        String Proveedor = this.dtm_Productos.getValueAt(ind, 2).toString();
+        String Marca = this.dtm_Productos.getValueAt(ind, 3).toString();
+        int Precio_Compra = Integer.parseInt(this.dtm_Productos.getValueAt(ind, 4).toString());
+        int Cantidad = Integer.parseInt(this.dtm_Productos.getValueAt(ind, 5).toString());
+        this.mostrarFichaProductos(id, Marca);
     }
     else{
         Ventana.imp("Seleccione un producto para editar.", "SISTEMA");
@@ -319,21 +334,20 @@ private void cmdEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 
 private void cmdEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEliminarActionPerformed
 // TODO add your handling code here:
-    /*if(tablaProductos.getRowCount() > 0 && tablaProductos.getSelectedRowCount() > 0){
+    if(tablaProductos.getRowCount() > 0 && tablaProductos.getSelectedRowCount() > 0){
         int ind = tablaProductos.getSelectedRow();
-        String nom = this.dtm_Productos.getValueAt(ind, 1).toString();
-        int id = this.myPrincipalForm.getmyEmpresaVentas().getIdProducto(nom);
-        String msg = this.myPrincipalForm.getmyEmpresaVentas().eliminarProducto(id);
+        int id = Integer.parseInt(this.dtm_Productos.getValueAt(ind, 0).toString());
+        String msg = this.myCtrlProducto.eliminarProducto(id);
         if(msg.equalsIgnoreCase("Producto eliminado Correctamente.")){
             Ventana.imp(msg, "SISTEMA.");
-            this.cargarTablaProductos("where activo = '1' ");
+            this.cargarTablaProductos("");
         }
         else
             Ventana.imp(msg, "SISTEMA.");
     }
     else{
         Ventana.imp("Seleccione un producto para eliminar.", "SISTEMA");
-    }*/
+    }
 }//GEN-LAST:event_cmdEliminarActionPerformed
 
 private void cmdEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdEliminarKeyPressed
